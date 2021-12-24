@@ -46,7 +46,7 @@ func GetIfaceSpeed(ifName string) int {
 		speed, _ = strconv.Atoi(os.Getenv(NET_SPEED))
 	}
 	if speed <= 0 {
-		klog.Fatalf("bad speed of %s %d", ifName, speed)
+		klog.Errorf("bad speed of %s %d", ifName, speed)
 	}
 	devSpeedMap[ifName] = speed
 	return speed
