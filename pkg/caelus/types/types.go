@@ -685,13 +685,17 @@ func initResourceIsolateConfig(config *ResourceIsolateConfig, nodeConfig *Metric
 	}
 
 	for _, f := range nodeConfig.IfacesWithProperty {
-		if strings.Contains(f, "_eni") {
-			index := strings.Index(f, "_")
-			config.EniIface = f[:index]
+		index := strings.Index(f, "_")
+		if index == -1 {
+			config.Iface = f
 		} else {
-			index := strings.Index(f, "_")
-			config.Iface = f[:index]
+			if strings.Contains(f, "_eni") {
+				config.EniIface = f[:index]
+			} else {
+				config.Iface = f[:index]
+			}
 		}
+
 	}
 	for _, d := range nodeConfig.DiskNames {
 		config.DiskNames = append(config.DiskNames, d)
